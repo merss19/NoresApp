@@ -1,7 +1,7 @@
 
 import App from './components/App';
 import Form from './containers/Form';
-import Notes from './containers/notes';
+import Notes from './pages/notes';
 
 
 export const paths = {

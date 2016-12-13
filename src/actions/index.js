@@ -102,6 +102,42 @@ export function signUp(login, pass, name) {
 
 }
 
+export function createNote(note) {
+    console.log('createNote-action')
+    console.log(note)
+    return (dispatch) => {
+        const userId = firebase.auth().currentUser.uid;
+        console.log(userId)
+        firebase.database().ref('users/' + userId).child('notes').push().set(note)
+        console.log('createNote-action-success')
+
+        dispatch({
+            type: 'CREATE_SUCCESS'
+        })
+    }
+
+
+}
+
+export function loadNotes() {
+    console.log('loadNotes-action')
+    return (dispatch) => {
+        const userId = firebase.auth().currentUser.uid;
+        console.log(userId)
+        const notes = firebase.database().ref('users/' + userId).child('notes')
+        notes.on('value', snap =>{
+            console.log('loadNotes-action-value')
+            console.log(snap.val())
+                dispatch({
+                    type: 'LOAD_NOTES_SUCCESS',
+                    notes:snap.val()
+                 })
+        })
+
+    }
+
+
+}
 export function signInError(error) {
     console.log('signInError')
     return {

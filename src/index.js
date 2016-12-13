@@ -5,8 +5,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import Form from './containers/Form';
 import store from './store';
-import CityHandler from './routeHandlers/CityHandler';
-import Notes from './containers/notes';
+
 import './app.css';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { getRoutes } from './routes';

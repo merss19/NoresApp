@@ -21,7 +21,7 @@ const logger = createLogger()
 }*/
 
 const enhancer = compose(
-    applyMiddleware(thunk, api, logger)
+    applyMiddleware(thunk, logger)
 )
 
 const store = createStore(reducer, {}, enhancer)
