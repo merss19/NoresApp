@@ -7,11 +7,11 @@ function clickH(){
 
 const Link = ({ active, children, filter,  onClick }) => {
     if (active) {
-        return <Button color="warning">{children}</Button>
+        return <Button color="warning" className="filter__btn">{children}</Button>
     }
 
     return (
-        <Button onClick={onClick} type="button" color="primary">
+        <Button onClick={onClick} type="button" color="primary" className="filter__btn">
             {children}
         </Button>
     )

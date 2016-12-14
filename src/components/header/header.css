@@ -1,0 +1,12 @@
+.header{
+    border-bottom: 1px solid #ddd;
+}
+
+.header__btns{
+    float: right;
+    line-height:46px;
+}
+
+.navbar-nav>li {
+    padding: 0 7px;
+}

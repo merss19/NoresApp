@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
-import {Button} from 'reactstrap';
+import {Button, Row, Col} from 'reactstrap';
 
 import FilterLink from '../filterLink'
 
 const Filter = () => (
+
     <div>
         Filter:
         <FilterLink filter="SHOW_ALL">
@@ -18,6 +19,8 @@ const Filter = () => (
             Not Important
         </FilterLink>
     </div>
+
+
 )
 
 export default Filter

@@ -4,40 +4,27 @@ ul{
 a{
     display: block;
 }
-.search-box{
-    margin:0 auto;
-    max-width:500px;
-    padding: 20px 0;
+
+input, textarea {outline:none;}
+input:active, textarea:active {outline:none;}
+:focus {outline:none;}
+textarea {resize:none;}
+textarea {resize:vertical;}
+textarea {resize:horizontal;}
+
+button:active, button:focus {
+    outline: none !important;
+}
+button::-moz-focus-inner {
+    border: 0;
 }
 
-.search-box__btn{
+
+.w-100{
     width:100%;
 }
-.search-box__line{
-    height:70px;
-}
 
-.item-city{
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 7px 10px;
-    position: relative;
-    top: -1px;
-    opacity: 0.6;
-    cursor: pointer;
-}
 
-.city-box{
-    text-align: center;
-}
-.city-box__btn{
-    width:100%;
-}
-.city-detail{
-    padding:50px 0;
-}
-
-.city-box__list{
-    margin: 0 -15px;
+.filter__btn{
+    margin-left:12px;
 }

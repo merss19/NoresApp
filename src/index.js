@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory,Redirect,IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
-import Form from './containers/Form';
 import store from './store';
 
 import './app.css';

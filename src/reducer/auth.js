@@ -11,7 +11,7 @@ const initialState = {
     loading: false,
     load: false,
     logged: false,
-    error:{}
+    error:''
 }
 
 export default function auth(state = initialState, action) {
@@ -19,35 +19,42 @@ export default function auth(state = initialState, action) {
     switch (action.type) {
 
         case 'SIGN_OUT':
-            console.log('INIT')
+
             return {
                 ...state,
-                logged:false
+                logged:false,
+                error:''
             }
 
         case 'INIT':
-            console.log('INIT')
             return {
                 ...state,
                 logged:true
+
             }
 
         case 'INIT_AUTH':
-            console.log('INIT_AUTH')
-            return state
-
-        case 'SIGN_IN_ERROR':
-            console.log('SIGN_IN_ERROR-red')
             return {
                 ...state,
-                error:action.payload
+                loading:true
+
             }
 
-        case 'SIGN_UP_ERROR':
-            console.log('SIGN_UP_ERROR-red')
+        case 'AUTH_ERROR':
+            console.log('AUTH_ERROR-red')
+            console.log(action.error)
             return {
                 ...state,
-                error:action.payload
+                error:action.error,
+                loading:false
+            }
+
+
+        case 'AUTH_SUCCESS':
+            return {
+                ...state,
+                error:'',
+                loading:false
             }
 
         default:

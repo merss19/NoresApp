@@ -1,0 +1,15 @@
+.filter{
+    float: right;
+}
+
+.addBtn{
+    float: left;
+}
+
+.notes__list{
+    padding:25px 0;
+}
+
+.notes-item__time{
+    padding:20px 0;
+}

@@ -2,12 +2,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AddNotes from '../../components/AddNotes';
-import NoteItem from '../../components/NoteItem';
+import NoteItem from '../../components/noteItem';
 import Filter from '../../components/filter';
 import { loadNotes, deleteNote, editNote, createNote} from '../../actions'
 import { Container, Row, Col,Label ,Input} from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupAddon , Form, FormGroup,FormText } from 'reactstrap'
 import { Panel } from 'react-bootstrap';
+import './notes.css'
 
 var _ = require('lodash')
 
@@ -44,20 +45,45 @@ var _ = require('lodash')
          })
      }
 
-     save(){
-         console.log('createsd')
-         let note = {
-             title:this.state.title,
-             desc:this.state.desc,
-             fire:this.state.fire
+     onKeyUp(event) {
+         if (event.keyCode === 13) {
+             this.save();
          }
-         this.props.createNote(note, this.state.editId)
-         this.toggle()
-         this.setState({
-             title: '',
-             desc: '',
-             create:false
-         });
+     }
+
+     save(){
+         if(this.state.title.length && this.state.desc.length){
+             let date = Date.now(),
+                dateObj = new Date(date),
+                 year = dateObj.getFullYear(),
+                 month = dateObj.getMonth(),
+                 day  = dateObj.getDate()
+
+             let note = {
+                 title:this.state.title,
+                 desc:this.state.desc,
+                 fire:this.state.fire,
+                 date: {
+                     stamp:date,
+                     year:year,
+                     month:month,
+                     day:day
+                 }
+             }
+
+             this.props.createNote(note, this.state.editId)
+             this.toggle()
+
+             this.setState({
+                 title: '',
+                 desc: '',
+                 create:false,
+                 fire:false
+             });
+         } else {
+             this.toggle()
+         }
+
 
      }
 
@@ -108,16 +134,35 @@ var _ = require('lodash')
             )
         })
 
+        console.log('filterrrrrrrrrrrrr')
+        console.log(list.toJS())
+        console.log(listNotes.toJS())
+
+        const filter = list.toJS().length ? <Filter /> : null
+
         const btnName = this.state.create ? 'create' : 'update'
 
 
         return (
                 <Container>
-                    <Button color="danger" onClick={this.add}>Add Notes</Button>
-                    <Filter />
+                    <Row>
+                        <Col>
+                            <div className="addBtn">
+                                <Button color="primary" onClick={this.add}>Add Notes</Button>
+                            </div>
+
+                            <div className="filter">
+                                {filter}
+                            </div>
+                        </Col>
+                    </Row>
+
 
                     <Row>
-                        {listNotes}
+                        <div className="notes__list">
+                            {listNotes}
+                        </div>
+
                     </Row>
 
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -130,16 +175,17 @@ var _ = require('lodash')
                                        value={this.state.title}
                                        type='text'
                                        onChange={this.change.bind(this)}
+                                       onKeyUp={this.onKeyUp.bind(this)}
 
                                 />
                             </InputGroup>
                             <FormGroup>
-                                <Label for="exampleText">Description</Label>
+                                <Label for="exampleText" className="desc">Description</Label>
                                 <Input type="textarea"
                                        name="desc"
-                                       id="exampleText"
                                        value={this.state.desc}
                                        onChange={this.change.bind(this)}
+                                       onKeyUp={this.onKeyUp.bind(this)}
 
                                 />
                             </FormGroup>

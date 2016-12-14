@@ -1,13 +1,14 @@
 
 import App from './components/app';
-import Form from './containers/Form';
+import Form from './pages/formAuth';
 import Notes from './pages/notes';
-
+import NotFound from './pages/notFound';
 
 export const paths = {
   ROOT: '/',
   Form: '/sign-in',
-  Notes: '/'
+  Notes: '/',
+  Any:'*'
 };
 
 export function isAuth(state) {
@@ -54,6 +55,10 @@ export const getRoutes = getState => {
         path: paths.Form,
         component: Form,
         onEnter: requireUnauth(getState)
+      },
+      {
+        path: paths.Any,
+        component: NotFound
       }
     ]
   };

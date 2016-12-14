@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { logout, initAuth} from '../../actions'
-//import { createSelector } from 'reselect';
-//import { authActions, getAuth } from 'src/core/auth';
-//import { paths } from '../routes';
-import Header from '../../containers/Header';
+
+import Header from '../../components/header';
 import { paths } from '../../routes';
 import firebase from 'firebase';
 
@@ -13,10 +11,7 @@ export class App extends Component {
     static contextTypes = {
         router: React.PropTypes.object.isRequired
     };
-   /* static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    };
-
+   /*
     static propTypes = {
         auth: PropTypes.object.isRequired,
         children: PropTypes.object.isRequired,
@@ -25,7 +20,7 @@ export class App extends Component {
     componentDidMount () {
         firebase.auth().onAuthStateChanged((user)=>{
             if (user) {
-                console.log('componentDidMount')
+                console.log('componentDidMountddd')
                 console.log(user)
                 console.log('initAuth')
                 console.log(this.props)
@@ -40,9 +35,7 @@ export class App extends Component {
     componentWillReceiveProps(nextProps) {
 
         console.log('componentWillReceivePropsvvv')
-        console.log(this.context)
-        console.log(this.props)
-        console.log(nextProps)
+
         const { router } = this.context
         const { auth } = this.props
         console.log('logged')
