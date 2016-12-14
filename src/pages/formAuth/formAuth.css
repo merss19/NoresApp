@@ -23,3 +23,17 @@
 .status{
     padding-top:15px;
 }
+
+.form-auth{
+    max-width:400px;
+}
+
+
+
+/*
+input:focus:required:invalid {
+    border: 1px solid red;
+}
+input:required:valid {
+    border: 1px solid green;
+}*/

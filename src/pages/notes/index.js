@@ -1,75 +1,75 @@
-
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AddNotes from '../../components/AddNotes';
 import NoteItem from '../../components/noteItem';
 import Filter from '../../components/filter';
-import { loadNotes, deleteNote, editNote, createNote} from '../../actions'
-import { Container, Row, Col,Label ,Input} from 'reactstrap';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupAddon , Form, FormGroup,FormText } from 'reactstrap'
-import { Panel } from 'react-bootstrap';
+import { loadNotes, deleteNote, createNote,unloadNotes} from '../../actions'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupAddon ,
+            Form, FormGroup, FormText,  Container, Row, Col,Label ,Input } from 'reactstrap'
 import './notes.css'
 
-var _ = require('lodash')
+class Notes extends Component {
 
- class Notes extends Component {
+    static propTypes = {
+        list: PropTypes.object.isRequired,
+        loadNotes: PropTypes.func.isRequired,
+        deleteNote: PropTypes.func.isRequired,
+        createNote: PropTypes.func.isRequired
+    };
 
-     constructor(props) {
-         super(props);
-         this.state = {
-             modal: false,
-             title: '',
-             desc: '',
-             editId:'',
-             create:false,
-             fire:false
-         }
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            title: '',
+            desc: '',
+            editId:'',
+            create:false,
+            fire:false
+        }
 
-         this.toggle = this.toggle.bind(this)
-         this.add = this.add.bind(this)
-         this.save = this.save.bind(this)
-         this.editHandler = this.editHandler.bind(this)
-     }
+        this.toggle = this.toggle.bind(this)
+        this.add = this.add.bind(this)
+        this.save = this.save.bind(this)
+        this.editHandler = this.editHandler.bind(this)
+    }
 
-     toggle(){
-         this.setState({
-             modal: !this.state.modal,
-             editId:''
-         });
-     }
+    toggle(){
+        this.setState({
+            modal: !this.state.modal,
+            editId:''
+        });
+    }
 
-     change(e){
-         console.log(e.target.name)
-         this.setState({
-             [e.target.name]: e.target.value.trim()
-         })
-     }
+    change(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
 
-     onKeyUp(event) {
-         if (event.keyCode === 13) {
-             this.save();
-         }
-     }
+    onKeyUp(event) {
+        if (event.keyCode === 13) {
+            this.save();
+        }
+    }
 
-     save(){
-         if(this.state.title.length && this.state.desc.length){
-             let date = Date.now(),
-                dateObj = new Date(date),
-                 year = dateObj.getFullYear(),
-                 month = dateObj.getMonth(),
-                 day  = dateObj.getDate()
-
-             let note = {
-                 title:this.state.title,
-                 desc:this.state.desc,
-                 fire:this.state.fire,
-                 date: {
+    save(){
+        if(this.state.title.length && this.state.desc.length){
+            let date = Date.now(),
+            dateObj = new Date(date),
+            year = dateObj.getFullYear(),
+            month = dateObj.getMonth(),
+            day  = dateObj.getDate(),
+            note = {
+                title:this.state.title.trim(),
+                desc:this.state.desc.trim(),
+                fire:this.state.fire,
+                date: {
                      stamp:date,
                      year:year,
                      month:month,
                      day:day
-                 }
-             }
+                }
+            }
 
              this.props.createNote(note, this.state.editId)
              this.toggle()
@@ -79,47 +79,50 @@ var _ = require('lodash')
                  desc: '',
                  create:false,
                  fire:false
-             });
-         } else {
+             })
+
+        } else {
              this.toggle()
-         }
+        }
 
 
-     }
+    }
 
-     fire(){
-         this.setState({
-             fire:!this.state.fire
-         });
-     }
+    fire(){
+        this.setState({
+            fire:!this.state.fire
+        });
+    }
 
-     add(){
-         this.toggle()
-         this.setState({
-             create: true,
-             title: '',
-             desc: ''
-         });
-     }
+    add(){
+        this.toggle()
+        this.setState({
+            create: true,
+            title: '',
+            desc: ''
+        });
+    }
 
 
-     componentWillMount() {
+    componentWillMount() {
         this.props.loadNotes();
     }
 
-     editHandler(item){
-         this.toggle()
-         console.log('editH')
-         console.log(item)
-         this.setState({
-             editId: item.id,
-             title: item.value.title,
-             desc: item.value.desc,
-             fire:item.value.fire,
-             create:false
-         })
+    componentWillUnmount() {
+        this.props.unloadNotes();
+    }
 
-     }
+    editHandler(item){
+        this.toggle()
+        this.setState({
+            editId: item.id,
+            title: item.value.title,
+            desc: item.value.desc,
+            fire:item.value.fire,
+            create:false
+        })
+
+    }
 
     render() {
         const { list } = this.props
@@ -134,14 +137,8 @@ var _ = require('lodash')
             )
         })
 
-        console.log('filterrrrrrrrrrrrr')
-        console.log(list.toJS())
-        console.log(listNotes.toJS())
-
         const filter = list.toJS().length ? <Filter /> : null
-
         const btnName = this.state.create ? 'create' : 'update'
-
 
         return (
                 <Container>
@@ -201,7 +198,7 @@ var _ = require('lodash')
                         </ModalFooter>
                     </Modal>
                 </Container>
-        );
+        )
     }
 }
 
@@ -212,7 +209,7 @@ export default connect((state) =>{
         console.log(state.notes.toJS())
         const list =  getFilter(state.notes.list, state.notes.filter)
     return { list }
-    },{loadNotes, deleteNote, editNote, createNote}
+    },{loadNotes, deleteNote, createNote,unloadNotes}
 )(Notes)
 
 

@@ -4,18 +4,6 @@ import { connect } from 'react-redux'
 import { setFilter} from '../../actions'
 import Link from '../link'
 
-/*const mapStateToProps = (state, ownProps) => {
-    return {
-        active: ownProps.filter === state.filter
-    }
-}
-
-
-
-const FilterLink = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Link)*/
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {

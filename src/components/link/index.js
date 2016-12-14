@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react'
 import {Button} from 'reactstrap';
 
-function clickH(){
-
-}
 
 const Link = ({ active, children, filter,  onClick }) => {
     if (active) {

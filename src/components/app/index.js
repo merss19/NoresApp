@@ -8,53 +8,42 @@ import firebase from 'firebase';
 
 
 export class App extends Component {
+
     static contextTypes = {
         router: React.PropTypes.object.isRequired
-    };
-   /*
-    static propTypes = {
-        auth: PropTypes.object.isRequired,
-        children: PropTypes.object.isRequired,
-        signOut: PropTypes.func.isRequired
-    };*/
-    componentDidMount () {
-        firebase.auth().onAuthStateChanged((user)=>{
-            if (user) {
-                console.log('componentDidMountddd')
-                console.log(user)
-                console.log('initAuth')
-                console.log(this.props)
-                this.props.initAuth()
-            } else {
-                console.log('componentDidMount')
-                console.log('nouser')
-            }
-        });
     }
 
+    static propTypes = {
+        auth: PropTypes.object.isRequired,
+        logout: PropTypes.func.isRequired,
+        initAuth: PropTypes.func.isRequired
+    }
+
+   componentDidMount () {
+     firebase.auth().onAuthStateChanged((user)=>{
+            if (user) {
+                this.props.initAuth()
+            } else {
+
+            }
+        })
+    }
+
+
+
     componentWillReceiveProps(nextProps) {
-
-        console.log('componentWillReceivePropsvvv')
-
         const { router } = this.context
         const { auth } = this.props
-        console.log('logged')
-        console.log(auth.logged)
-        console.log(!nextProps.auth.logged)
 
         if (auth.logged && !nextProps.auth.logged) {
             router.replace(paths.Form)
         }  else if (!auth.logged && nextProps.auth.logged) {
             router.replace(paths.Notes)
         }
-
     }
 
     render() {
-        console.log('appss')
-        console.log(this.props.logout)
-        console.log(this.props)
-        return (
+         return (
             <div>
                 <Header
                     checkAuth={this.props.auth.logged}
@@ -63,14 +52,12 @@ export class App extends Component {
 
                 <div className="main">{this.props.children}</div>
             </div>
-        );
+        )
     }
 }
 
 export default connect((state) =>{
         const { auth } = state
-        console.log('App')
-        console.log(state)
         return { auth }
     },{ logout,initAuth}
 )(App)

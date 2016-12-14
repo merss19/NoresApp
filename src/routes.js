@@ -12,16 +12,12 @@ export const paths = {
 };
 
 export function isAuth(state) {
-    console.log('isAuth')
-    console.log(state.auth.logged)
   return state.auth.logged;
 }
 
 const requireAuth = getState => {
   return (nextState, replace) => {
-      console.log('requireAuth')
     if (!isAuth(getState())) {
-        console.log('replace-form')
       replace(paths.Form);
     }
   };
@@ -29,17 +25,15 @@ const requireAuth = getState => {
 
 const requireUnauth = getState => {
   return (nextState, replace) => {
-      console.log('requireUnauth')
     if (isAuth(getState())) {
-        console.log('replace-notes')
       replace(paths.Notes);
     }
-  };
-};
+  }
+}
 
 
 export const getRoutes = getState => {
-    console.log('getStateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+
 
   return {
     path: paths.ROOT,

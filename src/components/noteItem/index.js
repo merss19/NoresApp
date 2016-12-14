@@ -5,6 +5,11 @@ import { Container, Row, Col,Label ,Input,Button} from 'reactstrap';
 import { Panel } from 'react-bootstrap';
 
 export default  class NoteItem extends Component {
+    static propTypes = {
+        item: PropTypes.object.isRequired,
+        delete: PropTypes.func.isRequired,
+        edit: PropTypes.func.isRequired
+    };
 
     deleteHandler(){
         this.props.delete(this.props.item.id)
@@ -20,13 +25,17 @@ export default  class NoteItem extends Component {
         const fire = item.value.fire ? 'danger' : 'info'
         const dateNow = new Date()
         const difDate = (dateNow- item.value.date.stamp)/1000
+        let day  = item.value.date.day
+            if (day < 10) day = '0' + day
+        let month  = item.value.date.month
+            if (month < 10) month = '0' + month
 
 
         const dateNote = (
             <div>
-                <span>Date:</span>
-                <span>{item.value.date.day}.</span>
-                <span>{item.value.date.month}.</span>
+                <span>Date: </span>
+                <span>{day}.</span>
+                <span>{month}.</span>
                 <span>{item.value.date.year}</span>
             </div>
         )
@@ -36,7 +45,7 @@ export default  class NoteItem extends Component {
                 days = Math.floor(difDate/86400),
                 hours = Math.floor((difDate - days*86400)/3600),
                 minute = Math.floor((difDate - days*86400 - hours*3600)/60)
-            value =  days + ' days'+ hours + ' hours,' +minute + ' minute'
+            value =  days + ' days,'+ hours + ' hours,' +minute + ' minute'
 
             if(!days){
                 value = hours + ' hours,' +minute + ' minute'

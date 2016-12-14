@@ -1,11 +1,7 @@
 import * as types from '../constants/ActionTypes'
 import { Record, Map } from 'immutable'
 
-const item = Record({
-    "id": "",
-    "city": "",
-    "error":""
-})
+
 
 const initialState = {
     loading: false,
@@ -18,13 +14,7 @@ export default function auth(state = initialState, action) {
 
     switch (action.type) {
 
-        case 'SIGN_OUT':
 
-            return {
-                ...state,
-                logged:false,
-                error:''
-            }
 
         case 'INIT':
             return {
@@ -41,8 +31,6 @@ export default function auth(state = initialState, action) {
             }
 
         case 'AUTH_ERROR':
-            console.log('AUTH_ERROR-red')
-            console.log(action.error)
             return {
                 ...state,
                 error:action.error,
@@ -53,6 +41,15 @@ export default function auth(state = initialState, action) {
         case 'AUTH_SUCCESS':
             return {
                 ...state,
+                error:'',
+                loading:false,
+                logged:true
+            }
+
+        case 'SIGN_OUT':
+            return {
+                ...state,
+                logged:false,
                 error:'',
                 loading:false
             }

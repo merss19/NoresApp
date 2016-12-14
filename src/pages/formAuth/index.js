@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { signIn, signUp, initAuth,logout} from '../../actions'
-//import { Alert, FormControl, Button ,Col, Row} from 'react-bootstrap';
-import { Row, Col, Alert, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { signIn, signUp,logout} from '../../actions'
+import { Row, Col, Alert, Button, Form, FormGroup,
+            Label, Input, FormText, Container } from 'reactstrap';
 import firebase from 'firebase';
 import './formAuth.css'
 import loadingImg from './spin.svg'
 
 class FormAuth extends Component {
+
+    static propTypes = {
+        auth: PropTypes.object.isRequired,
+        signIn: PropTypes.func.isRequired,
+        signUp: PropTypes.func.isRequired,
+        logout: PropTypes.func.isRequired
+    };
 
     constructor(props) {
         super(props)
@@ -16,10 +23,6 @@ class FormAuth extends Component {
             pass:''
         }
     }
-
-
-
-
 
     auth(e){
         console.log(e.target.name)
@@ -43,22 +46,10 @@ class FormAuth extends Component {
 
     render() {
         const {auth } = this.props
-
         const error = auth.error ?  <Alert color="danger">{auth.error}</Alert> : null
-
         const loading = auth.loading ? <div className="loading"><img className="loading__img" src={loadingImg} alt="Loading" /></div> : null
-
         const status = auth.loading ?  loading :  error
-
-        const logout = (
-            <Button onClick={this.logout.bind(this)} color="primary" >Logout</Button>
-        )
-
-        console.log('logoutttttttttttt')
-        console.log(auth.logged)
-
-        const authBtns = (
-
+                const authBtns = (
                 <Row>
                     <Col xs="6">
                         <Button onClick={this.signIn.bind(this)}  className="w-100" color="primary">Sign in</Button>
@@ -70,11 +61,9 @@ class FormAuth extends Component {
                 </Row>
             )
 
-        const btns = auth.logged ? logout : authBtns
-
 
         return (
-            <div className="search-box">
+            <Container className="form-auth">
                 <Form>
 
                     <FormGroup>
@@ -84,6 +73,8 @@ class FormAuth extends Component {
                                placeholder="Login"
                                type='text'
                                onChange={this.auth.bind(this)}
+                               required
+
                         />
                     </FormGroup>
 
@@ -94,6 +85,8 @@ class FormAuth extends Component {
                                placeholder="Password"
                                type='text'
                                onChange={this.auth.bind(this)}
+                               required
+
                         />
                     </FormGroup>
 
@@ -101,16 +94,14 @@ class FormAuth extends Component {
                     {authBtns}
 
                 <div className="status">{status}</div>
-            </div>
-        );
+            </Container>
+        )
     }
 }
 
 export default connect((state) =>{
         const { auth } = state
-        console.log('FormAuth')
-        console.log(state)
       return { auth }
-},{signIn, signUp, initAuth, logout}
+},{signIn, signUp, logout}
 )(FormAuth)
 
