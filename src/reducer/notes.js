@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes'
-import { Record, Map } from 'immutable'
+import { Record, Map , List} from 'immutable'
 
 const item = Record({
     "id": "",
@@ -7,11 +7,12 @@ const item = Record({
     "error":""
 })
 
-const initialState = {
-    notes:[]
-}
+const NotesState = new Record ({
+    list: new List(),
+    filter:'SHOW_ALL'
+})
 
-export default function notes(state = initialState, action) {
+export default function notes(state = new NotesState(), action) {
 
     switch (action.type) {
 
@@ -22,29 +23,19 @@ export default function notes(state = initialState, action) {
 
 
         case 'LOAD_NOTES_SUCCESS':
-            console.log('LOAD_NOTES_SUCCESS')
-            return {
+            console.log('LOAD_NOTES_SUCCESSdddd')
+            /*return {
                 ...state,
                 notes:action.notes
-            }
+            }*/
+            return state.set('list', new List(action.notes));
 
-        case 'INIT_AUTH':
-            console.log('INIT_AUTH')
-            return state
+        case 'SET_FILTER':
+            console.log('SET_FILTER-red')
+            console.log(action.filter)
+            return state.set('filter', action.filter);
 
-        case 'SIGN_IN_ERROR':
-            console.log('SIGN_IN_ERROR-red')
-            return {
-                ...state,
-                error:action.payload
-            }
 
-        case 'SIGN_UP_ERROR':
-            console.log('SIGN_UP_ERROR-red')
-            return {
-                ...state,
-                error:action.payload
-            }
 
         default:
             return state

@@ -83,10 +83,6 @@ import { createNote} from '../actions'
                     </ModalFooter>
                 </Modal>
             </div>
-
-
-
-
             )
     }
 }

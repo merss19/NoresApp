@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes'
 import firebase from 'firebase';
 import { firebaseAuth, firebaseApp} from '../firebase'
+var _ = require('lodash')
 
 export function addCity(text) {
     console.log('addCity-action')
@@ -102,22 +103,65 @@ export function signUp(login, pass, name) {
 
 }
 
-export function createNote(note) {
+export function createNote(note,id) {
     console.log('createNote-action')
     console.log(note)
+    console.log(id)
     return (dispatch) => {
         const userId = firebase.auth().currentUser.uid;
         console.log(userId)
-        firebase.database().ref('users/' + userId).child('notes').push().set(note)
-        console.log('createNote-action-success')
+        if(id.length){
+            console.log('createNote-update')
+            firebase.database().ref('users/' + userId).child('notes/'+id).update(note)
+            dispatch({
+                type: 'UPDATE_SUCCESS'
+            })
+        } else {
+            console.log('createccccccccccccccccccccccccccccccccccccccccccccccccccccc')
+            firebase.database().ref('users/' + userId).child('notes').push().set(note)
+            console.log('createNote-action-success')
 
-        dispatch({
-            type: 'CREATE_SUCCESS'
-        })
+            dispatch({
+                type: 'CREATE_SUCCESS'
+            })
+        }
+
     }
 
 
 }
+
+export const setFilter = (filter) => {
+    console.log('SET_FILTER')
+    console.log(filter)
+    return {
+        type: 'SET_FILTER',
+        filter:filter
+    }
+}
+
+export function deleteNote(id) {
+    console.log('deleteNote')
+    console.log(id)
+
+        console.log('deleteNote -return')
+        const userId = firebase.auth().currentUser.uid;
+        console.log(firebase.database().ref('users/' + userId))
+        firebase.database().ref('users/' + userId).child('notes/'+id).remove()
+        console.log('deleteNote -del')
+
+}
+/*export function editNote(id) {
+    console.log('editNote')
+    console.log(id)
+
+    console.log('editNote -return')
+    const userId = firebase.auth().currentUser.uid;
+    console.log(firebase.database().ref('users/' + userId))
+    firebase.database().ref('users/' + userId).child('notes/'+id).update()
+    console.log('deleteNote -del')
+
+}*/
 
 export function loadNotes() {
     console.log('loadNotes-action')
@@ -126,11 +170,21 @@ export function loadNotes() {
         console.log(userId)
         const notes = firebase.database().ref('users/' + userId).child('notes')
         notes.on('value', snap =>{
-            console.log('loadNotes-action-value')
+            console.log('loadNotes-action-valuefff')
             console.log(snap.val())
+            let list = []
+            _.mapKeys(snap.val(), (value, key) => {
+                console.log(key + value)
+
+                list.push({
+                    id:key,
+                    value
+                })
+                console.log(list)
+            });
                 dispatch({
                     type: 'LOAD_NOTES_SUCCESS',
-                    notes:snap.val()
+                    notes:list
                  })
         })
 
@@ -155,14 +209,14 @@ export function signUpError(error) {
 }
 
 export function initAuth() {
-    console.log('initAuth')
+
     return {
         type: 'INIT'
     };
 }
 
 export function logout() {
-    console.log('logout')
+
     const auth = firebase.auth()
     return dispatch => {
 

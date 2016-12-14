@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { logout, initAuth} from '../actions'
+import { logout, initAuth} from '../../actions'
 //import { createSelector } from 'reselect';
 //import { authActions, getAuth } from 'src/core/auth';
 //import { paths } from '../routes';
-import Header from '../containers/Header';
-import { paths } from '../routes';
+import Header from '../../containers/Header';
+import { paths } from '../../routes';
 import firebase from 'firebase';
 
 

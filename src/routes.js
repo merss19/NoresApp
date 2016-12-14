@@ -1,5 +1,5 @@
 
-import App from './components/App';
+import App from './components/app';
 import Form from './containers/Form';
 import Notes from './pages/notes';
 
