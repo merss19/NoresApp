@@ -1,4 +1,4 @@
-import * as types from '../constants/ActionTypes'
+import * as types from '../constants'
 import { Record, Map , List} from 'immutable'
 
 
@@ -12,17 +12,17 @@ export default function notes(state = new NotesState(), action) {
 
     switch (action.type) {
 
-        case 'CREATE_SUCCESS':
+        case types.CREATE_SUCCESS:
             return  state
 
 
-        case 'LOAD_NOTES_SUCCESS':
+        case types.LOAD_NOTES_SUCCESS:
             return state.set('list', new List(action.notes));
 
-        case 'SET_FILTER':
+        case types.SET_FILTER:
             return state.set('filter', action.filter);
 
-        case 'UNLOAD_NOTES':
+        case types.UNLOAD_NOTES:
             return state.set('list', new List());
 
 

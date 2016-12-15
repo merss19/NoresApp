@@ -1,6 +1,6 @@
-import * as types from '../constants/ActionTypes'
 import firebase from 'firebase';
 import { firebaseApp} from '../firebase'
+import * as types from '../constants'
 import  _ from 'lodash'
 
 const auth = firebase.auth()
@@ -11,7 +11,7 @@ export function signIn(login, pass) {
     return (dispatch) => {
 
         dispatch({
-            type: 'INIT_AUTH'
+            type: types.INIT_AUTH
         })
 
         promise.catch(error => {
@@ -31,7 +31,7 @@ export function signUp(login, pass) {
     return (dispatch) => {
 
         dispatch({
-            type: 'INIT_AUTH'
+            type: types.INIT_AUTH
         })
 
         promise.catch(error => {
@@ -53,12 +53,12 @@ export function createNote(note,id) {
         if(id.length){
             firebase.database().ref('users/' + userId).child('notes/'+id).update(note)
             dispatch({
-                type: 'UPDATE_SUCCESS'
+                type: types.CREATE_SUCCESS
             })
         } else {
             firebase.database().ref('users/' + userId).child('notes').push().set(note)
             dispatch({
-                type: 'CREATE_SUCCESS'
+                type: types.CREATE_SUCCESS
             })
         }
 
@@ -91,7 +91,7 @@ export function loadNotes() {
 
             });
                 dispatch({
-                    type: 'LOAD_NOTES_SUCCESS',
+                    type: types.LOAD_NOTES_SUCCESS,
                     notes:list
                  })
         })
@@ -109,14 +109,14 @@ export function logout() {
 
 export const setFilter = (filter) => {
     return {
-        type: 'SET_FILTER',
+        type: types.SET_FILTER,
         filter:filter
     }
 }
 export function authError(error) {
 
     return {
-        type: 'AUTH_ERROR',
+        type: types.AUTH_ERROR,
         error: error.message
     }
 }
@@ -124,23 +124,23 @@ export function authError(error) {
 
 export function AuthSuccess() {
     return {
-        type: 'AUTH_SUCCESS'
+        type: types.AUTH_SUCCESS
     };
 }
 export function initAuth() {
     return {
-        type: 'INIT'
+        type: types.INIT
     };
 }
 
 export function unloadNotes(){
     return{
-        type: 'UNLOAD_NOTES'
+        type: types.UNLOAD_NOTES
     }
 }
 
 export function signOut() {
     return {
-        type: 'SIGN_OUT'
+        type: types.SIGN_OUT
     };
 }

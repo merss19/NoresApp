@@ -1,4 +1,4 @@
-# Weather-app
+# Notes app
 
 
 ## Installation

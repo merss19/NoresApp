@@ -1,0 +1,10 @@
+export const INIT = 'INIT'
+export const INIT_AUTH = 'INIT_AUTH'
+export const AUTH_ERROR = 'AUTH_ERROR'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const SIGN_OUT = 'SIGN_OUT'
+
+export const CREATE_SUCCESS = 'CREATE_SUCCESS'
+export const LOAD_NOTES_SUCCESS = 'LOAD_NOTES_SUCCESS'
+export const SET_FILTER = 'SET_FILTER'
+export const UNLOAD_NOTES = 'UNLOAD_NOTES'

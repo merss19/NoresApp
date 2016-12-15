@@ -74,6 +74,7 @@ class FormAuth extends Component {
                                type='text'
                                onChange={this.auth.bind(this)}
                                required
+                               state="danger"
 
                         />
                     </FormGroup>
@@ -86,6 +87,7 @@ class FormAuth extends Component {
                                type='text'
                                onChange={this.auth.bind(this)}
                                required
+                               state="danger"
 
                         />
                     </FormGroup>

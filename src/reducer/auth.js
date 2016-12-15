@@ -1,4 +1,4 @@
-import * as types from '../constants/ActionTypes'
+import * as types from '../constants'
 import { Record, Map } from 'immutable'
 
 
@@ -16,21 +16,21 @@ export default function auth(state = initialState, action) {
 
 
 
-        case 'INIT':
+        case types.INIT:
             return {
                 ...state,
                 logged:true
 
             }
 
-        case 'INIT_AUTH':
+        case types.INIT_AUTH:
             return {
                 ...state,
                 loading:true
 
             }
 
-        case 'AUTH_ERROR':
+        case types.AUTH_ERROR:
             return {
                 ...state,
                 error:action.error,
@@ -38,7 +38,7 @@ export default function auth(state = initialState, action) {
             }
 
 
-        case 'AUTH_SUCCESS':
+        case types.AUTH_SUCCESS:
             return {
                 ...state,
                 error:'',
@@ -46,7 +46,7 @@ export default function auth(state = initialState, action) {
                 logged:true
             }
 
-        case 'SIGN_OUT':
+        case types.SIGN_OUT:
             return {
                 ...state,
                 logged:false,

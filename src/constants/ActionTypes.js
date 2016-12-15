@@ -1,8 +1,0 @@
-export const ADD_CITY = 'ADD_CITY'
-export const DELETE_CITY = 'DELETE_CITY'
-export const LOAD_CITY = 'LOAD_CITY'
-export const AUTO = 'AUTO'
-export const DELETE_AUTO = 'DELETE_AUTO'
-export const START = '_START'
-export const SUCCESS = '_SUCCESS'
-export const FAIL = '_FAIL'
